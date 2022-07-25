@@ -27,19 +27,20 @@ def asteroids(num_asteroids, player_position, batch=None):
     #     new_asteroid.velocity_x, new_asteroid.velocity_y = random.random() * 40, random.random() * 40
     #     asteroids.append(new_asteroid)
     asteroids = []
-    words = [["Y", "O", "U"], ["L", "O", "L", "I", "K"], ["G", "O"]]
+    words = ["BAI", "I"]
     delta_x = 800 // len(words)
     asteroid_x = 40
     for word in words:
         asteroid_y = random.randint(600, 700)
         word_velocity = -random.randint(10, 30)
         for letter in word:
-            new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
+            # new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
+            new_asteroid = asteroid.Asteroid(letter=letter, x=asteroid_x, y=asteroid_y, batch=batch)
 
             # new_asteroid.rotation = random.randint(0, 360)
             # new_asteroid.velocity_x, new_asteroid.velocity_y = random.random() * 40, random.random() * 40
             new_asteroid.velocity_y = word_velocity
             asteroids.append(new_asteroid)
-            asteroid_y += 80
+            asteroid_y += 60
         asteroid_x += delta_x
     return asteroids

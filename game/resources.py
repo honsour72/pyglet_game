@@ -1,6 +1,12 @@
 import pyglet
 
 
+def get_image(letter: str) -> pyglet.resource.image:
+    img = pyglet.resource.image(f"{letter}.png")
+    center_image(img)
+    return img
+
+
 def center_image(image):
     """Sets an image's anchor point to its center"""
     image.anchor_x = image.width / 2

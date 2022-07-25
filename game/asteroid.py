@@ -5,8 +5,9 @@ from . import physicalobject, resources
 class Asteroid(physicalobject.PhysicalObject):
     """An asteroid that divides a little before it dies"""
 
-    def __init__(self, *args, **kwargs):
-        super(Asteroid, self).__init__(resources.asteroid_image, *args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    def __init__(self, letter, *args, **kwargs):
+        super(Asteroid, self).__init__(img=resources.get_image(letter), *args, **kwargs)
 
         # Slowly rotate the asteroid as it moves
         # self.rotate_speed = random.random() * 100.0 - 50.0
