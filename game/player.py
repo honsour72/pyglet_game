@@ -14,7 +14,7 @@ class Player(physicalobject.PhysicalObject):
         self.engine_sprite.visible = False
 
         # Set some easy-to-tweak constants
-        self.rotation = -90
+        # self.rotation = -90
         self.thrust = 300.0
         self.rotate_speed = 200.0
         self.bullet_speed = 700.0
@@ -46,11 +46,15 @@ class Player(physicalobject.PhysicalObject):
             # self.velocity_y += force_y
 
             # If thrusting, update the engine sprite
-            # self.engine_sprite.rotation = self.rotation
-            # self.engine_sprite.x = self.x
-            # self.engine_sprite.y = self.y
-            # self.engine_sprite.visible = True
+            self.engine_sprite.rotation = self.rotation - 90
+            self.engine_sprite.x = self.x
+            self.engine_sprite.y = self.y
+            self.engine_sprite.visible = True
             self.y += 2
+
+        if not self.key_handler[key.UP]:
+            self.engine_sprite.visible = False
+
         if self.key_handler[key.DOWN]:
             self.y -= 2
 
@@ -60,11 +64,17 @@ class Player(physicalobject.PhysicalObject):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == key.SPACE:
+            self.image = resources.player_fire
+            pyglet.clock.schedule_once(self.unfire, 0.2)
             self.fire()
+
+    def unfire(self, dt):
+        self.image = resources.player_image
 
     def fire(self):
         # Note: pyglet's rotation attributes are in "negative degrees"
-        angle_radians = -math.radians(self.rotation)
+        # angle_radians = -math.radians(self.rotation)
+        angle_radians = math.radians(90)
 
         # Create a new bullet just in front of the player
         ship_radius = self.image.width / 2
@@ -73,6 +83,7 @@ class Player(physicalobject.PhysicalObject):
         new_bullet = bullet.Bullet(bullet_x, bullet_y, batch=self.batch)
 
         # Give it some speed
+        # bullet_vx = 0
         bullet_vx = self.velocity_x + math.cos(angle_radians) * self.bullet_speed
         bullet_vy = self.velocity_y + math.sin(angle_radians) * self.bullet_speed
         new_bullet.velocity_x, new_bullet.velocity_y = bullet_vx, bullet_vy
