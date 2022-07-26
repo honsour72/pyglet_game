@@ -1,3 +1,5 @@
+import random
+
 import pyglet
 from game import asteroid, load, player
 
@@ -15,7 +17,9 @@ level_label = pyglet.text.Label(text="Version 5: It's a Game!",
 game_over_label = pyglet.text.Label(text="GAME OVER",
                                     x=400, y=-300, anchor_x='center',
                                     batch=main_batch, font_size=48)
-
+you_win_label = pyglet.text.Label(text="CONGRATS, YOU WIN!",
+                                  x=400, y=-300, anchor_x='center',
+                                  batch=main_batch, font_size=48)
 counter = pyglet.window.FPSDisplay(window=game_window)
 
 player_ship = None
@@ -27,16 +31,6 @@ game_objects = []
 # We need to pop off as many event stack frames as we pushed on
 # every time we reset the level.
 event_stack_size = 0
-
-
-def init():
-    global score, num_asteroids
-
-    score = 0
-    score_label.text = "Score: " + str(score)
-
-    num_asteroids = 3
-    reset_level(2)
 
 
 def reset_level(num_lives=2):
@@ -57,7 +51,9 @@ def reset_level(num_lives=2):
     player_lives = load.player_lives(num_lives, main_batch)
 
     # Make some asteroids so we have something to shoot at 
-    asteroids = load.asteroids(num_asteroids, player_ship.position, main_batch)
+    # asteroids = load.asteroids(num_asteroids, player_ship.position, main_batch)
+    # asteroids = load.asteroids(words_amount=5, batch=main_batch)
+    asteroids = load.asteroids(words_amount=5, batch=main_batch)
 
     # Store all objects that update each frame in a list
     game_objects = [player_ship] + asteroids
@@ -146,18 +142,41 @@ def update(dt):
         else:
             game_over_label.y = 300
     elif victory:
-        num_asteroids += 1
-        player_ship.delete()
-        score += 10
-        reset_level(len(player_lives))
+        pyglet.clock.unschedule(set_words)
+        player_ship.dead = True
+        # for obj in game_objects:
+        #
+        #     obj.delete()
+        # player_ship.delete()
+        player_ship.y = 200
+        game_objects.clear()
+        # score += 10
+        # reset_level(len(player_lives))
+    #
+    # if score == 20:
+    #     player_ship.delete()
+        # for obj in game_objects:
+        #     obj.delete()
+        you_win_label.y = 300
+
+
+def set_words(dt):
+    global game_objects
+    amount = random.randint(1, 5)
+    words = load.asteroids(amount, batch=main_batch)
+    game_objects.extend(words)
 
 
 if __name__ == "__main__":
     # Start it up!
-    init()
+
+    score = 0
+    score_label.text = "Score: " + str(score)
+    reset_level(2)
 
     # Update the game 120 times per second
     pyglet.clock.schedule_interval(update, 1 / 120.0)
+    # pyglet.clock.schedule_interval(set_words, 10)
 
     # Tell pyglet to do its thing
     pyglet.app.run()

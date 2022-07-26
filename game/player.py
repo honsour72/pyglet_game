@@ -65,8 +65,9 @@ class Player(physicalobject.PhysicalObject):
     def on_key_press(self, symbol, modifiers):
         if symbol == key.SPACE:
             self.image = resources.player_fire
-            pyglet.clock.schedule_once(self.unfire, 0.2)
             self.fire()
+            # self.image = resources.player_image
+            pyglet.clock.schedule_once(self.unfire, 0.2)
 
     def unfire(self, dt):
         self.image = resources.player_image
