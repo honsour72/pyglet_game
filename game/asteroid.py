@@ -12,6 +12,7 @@ class Asteroid(physicalobject.PhysicalObject):
         # Slowly rotate the asteroid as it moves
         # self.rotate_speed = random.random() * 100.0 - 50.0
         self.rotate_speed = 0
+        self.letter = letter
 
     def update(self, dt):
         super(Asteroid, self).update(dt)
@@ -21,10 +22,10 @@ class Asteroid(physicalobject.PhysicalObject):
         super(Asteroid, self).handle_collision_with(other_object)
 
         # Superclass handles deadness already
-        if self.dead and self.scale > 0.25:
+        if self.dead and self.scale > 0.5:
             num_asteroids = random.randint(2, 3)
             for i in range(num_asteroids):
-                new_asteroid = Asteroid(x=self.x, y=self.y, batch=self.batch)
+                new_asteroid = Asteroid(letter=self.letter, x=self.x, y=self.y, batch=self.batch)
                 new_asteroid.rotation = random.randint(0, 360)
                 new_asteroid.velocity_x = random.random() * 10 + self.velocity_x
                 new_asteroid.velocity_y = -random.random() * 30 + self.velocity_y

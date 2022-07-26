@@ -18,7 +18,7 @@ pyglet.resource.path = ['./resources']
 pyglet.resource.reindex()
 
 # Load the three main resources and get them to draw centered
-player_image = pyglet.resource.image("player2.png")
+player_image = pyglet.resource.image("player.png")
 center_image(player_image)
 player_fire = pyglet.resource.image("player_fire.png")
 center_image(player_fire)
@@ -26,7 +26,7 @@ center_image(player_fire)
 bullet_image = pyglet.resource.image("bullet.png")
 center_image(bullet_image)
 
-asteroid_image = pyglet.resource.image("asteroid.png")
+asteroid_image = pyglet.resource.image("X.png")
 center_image(asteroid_image)
 
 # The engine flame should not be centered on the ship. Rather, it should be shown 
