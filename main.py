@@ -1,5 +1,5 @@
 import pyglet
-from game import letter, load, player
+from game import letter, config, player
 from random import randint
 
 game_window = pyglet.window.Window(800, 600)
@@ -41,12 +41,12 @@ def start_game(only_player=False):
     player_ship = player.Player(x=400, y=300, batch=main_batch)
 
     # Make three sprites to represent remaining lives
-    player_lives = load.player_lives(num_lives, main_batch)
+    player_lives = config.player_lives(num_lives, main_batch)
 
     # Make some asteroids so we have something to shoot at
     # asteroids = load.asteroids(num_asteroids, player_ship.position, main_batch)
     if not only_player:
-        asteroids = load.asteroids(words_amount=5, batch=main_batch)
+        asteroids = config.asteroids(words_amount=5, batch=main_batch)
         game_objects = [player_ship] + asteroids
     else:
         game_objects.append(player_ship)
@@ -98,7 +98,7 @@ def update_game(dt):
         obj.new_objects = []
 
         # Check for win condition
-        if isinstance(obj, asteroid.Letter):
+        if isinstance(obj, letter.Letter):
             asteroids_remaining += 1
 
     # if asteroids_remaining == 0:
@@ -121,7 +121,7 @@ def update_game(dt):
         game_objects.remove(to_remove)
 
         # Bump the score if the object to remove is an asteroid
-        if isinstance(to_remove, asteroid.Letter):
+        if isinstance(to_remove, letter.Letter):
             score += 1
             score_label.text = "Score: " + str(score)
 
@@ -158,7 +158,7 @@ def update_game(dt):
 def set_words(dt):
     global game_objects
     amount = randint(1, 10)
-    words = load.asteroids(amount, batch=main_batch)
+    words = config.asteroids(amount, batch=main_batch)
     game_objects.extend(words)
 
 
