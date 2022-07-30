@@ -34,30 +34,23 @@ def generate_random_words(filename: str = './resources/words.txt', amount: int =
     return words
 
 
-def asteroids(words_amount: int = None, batch=None):
+def get_words(words_amount: int = None, batch=None):
     """Generate asteroid objects with random positions and velocities, not close to the player"""
-    asteroids = []
+    words_list = []
     words = generate_random_words(amount=words_amount)
-    delta_x = 800 // len(words)
-    asteroid_x = 40
     for word in words:
-        asteroid_x = random.randint(1, 750)
-        asteroid_y = random.randint(600, 700)
+        word_x = random.randint(1, 750)
+        word_y = random.randint(600, 700)
         word_scale = random.choice([0.5, 0.6, 0.7, 0.8, 0.9, 1])
         word_velocity = -random.randint(10, 50) * (1/word_scale)
         letter_distance = word_scale * 60
         for let in word[::-1]:
-            # new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
-            new_asteroid = letter.Letter(letter=let, x=asteroid_x, y=asteroid_y, batch=batch)
-
-            # new_asteroid.rotation = random.randint(0, 360)
-            # new_asteroid.velocity_x, new_asteroid.velocity_y = random.random() * 40, random.random() * 40
-            new_asteroid.velocity_y = word_velocity
-            new_asteroid.scale = word_scale
-            asteroids.append(new_asteroid)
-            asteroid_y += letter_distance
-        # asteroid_x += delta_x
-    return asteroids
+            new_letter = letter.Letter(letter=let, x=word_x, y=word_y, batch=batch)
+            new_letter.velocity_y = word_velocity
+            new_letter.scale = word_scale
+            words_list.append(new_letter)
+            word_y += letter_distance
+    return words_list
 
 
 def distance(point_1=(0, 0), point_2=(0, 0)):
@@ -95,8 +88,8 @@ center_image(player_fire)
 bullet_image = pyglet.resource.image("bullet.png")
 center_image(bullet_image)
 
-asteroid_image = pyglet.resource.image("X.png")
-center_image(asteroid_image)
+x_image = pyglet.resource.image("X.png")
+center_image(x_image)
 
 # The engine flame should not be centered on the ship. Rather, it should be shown
 # behind it. To achieve this effect, we just set the anchor point outside the

@@ -46,7 +46,7 @@ def start_game(only_player=False):
     # Make some asteroids so we have something to shoot at
     # asteroids = load.asteroids(num_asteroids, player_ship.position, main_batch)
     if not only_player:
-        asteroids = config.asteroids(words_amount=5, batch=main_batch)
+        asteroids = config.get_words(words_amount=5, batch=main_batch)
         game_objects = [player_ship] + asteroids
     else:
         game_objects.append(player_ship)
@@ -102,7 +102,7 @@ def update_game(dt):
             asteroids_remaining += 1
 
     # if asteroids_remaining == 0:
-    if score == 20:
+    if score == 200:
         # Don't act on victory until the end of the time step
         victory = True
 
@@ -158,7 +158,7 @@ def update_game(dt):
 def set_words(dt):
     global game_objects
     amount = randint(1, 10)
-    words = config.asteroids(amount, batch=main_batch)
+    words = config.get_words(amount, batch=main_batch)
     game_objects.extend(words)
 
 
