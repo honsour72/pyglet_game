@@ -45,7 +45,7 @@ def reset_level(num_lives=2):
         life.delete()
 
     # Initialize the player sprite
-    player_ship = player.Player(x=400, y=300, batch=main_batch)
+    player_ship = player.Player(x=400, y=100, batch=main_batch)
 
     # Make three sprites to represent remaining lives
     player_lives = load.player_lives(num_lives, main_batch)
@@ -73,7 +73,7 @@ def on_draw():
 
 
 def update(dt):
-    global score, num_asteroids
+    global score, num_asteroids, player_ship
 
     player_dead = False
     victory = False
@@ -143,12 +143,12 @@ def update(dt):
             game_over_label.y = 300
     elif victory:
         pyglet.clock.unschedule(set_words)
-        player_ship.dead = True
-        # for obj in game_objects:
-        #
-        #     obj.delete()
+        # player_ship.dead = True
+        for obj in game_objects:
+
+            obj.delete()
         # player_ship.delete()
-        player_ship.y = 200
+        # player_ship.y = -200
         game_objects.clear()
         # score += 10
         # reset_level(len(player_lives))
