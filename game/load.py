@@ -1,6 +1,6 @@
 import pyglet
 import random
-from . import asteroid, resources, util
+from . import letter, resources, util
 
 
 def player_lives(num_icons, batch=None):
@@ -42,7 +42,7 @@ def asteroids(words_amount: int = None, batch=None):
         letter_distance = word_scale * 60
         for letter in word[::-1]:
             # new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
-            new_asteroid = asteroid.Asteroid(letter=letter, x=asteroid_x, y=asteroid_y, batch=batch)
+            new_asteroid = asteroid.Letter(letter=letter, x=asteroid_x, y=asteroid_y, batch=batch)
 
             # new_asteroid.rotation = random.randint(0, 360)
             # new_asteroid.velocity_x, new_asteroid.velocity_y = random.random() * 40, random.random() * 40

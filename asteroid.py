@@ -1,7 +1,7 @@
 import random
 
 import pyglet
-from game import asteroid, load, player
+from game import letter, load, player
 
 # Set up a window
 game_window = pyglet.window.Window(800, 600)
@@ -105,7 +105,7 @@ def update(dt):
         obj.new_objects = []
 
         # Check for win condition
-        if isinstance(obj, asteroid.Asteroid):
+        if isinstance(obj, asteroid.Letter):
             asteroids_remaining += 1
 
     if asteroids_remaining == 0:
@@ -127,7 +127,7 @@ def update(dt):
         game_objects.remove(to_remove)
 
         # Bump the score if the object to remove is an asteroid
-        if isinstance(to_remove, asteroid.Asteroid):
+        if isinstance(to_remove, asteroid.Letter):
             score += 1
             score_label.text = "Score: " + str(score)
 
