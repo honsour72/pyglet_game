@@ -11,7 +11,7 @@ class Player(physicalobject.PhysicalObject):
         self.engine_sprite = pyglet.sprite.Sprite(img=config.engine_image, *args, **kwargs)
         self.engine_sprite.visible = False
         self.thrust = 300.0
-        self.rotate_speed = 200.0
+        # self.rotate_speed = 200.0
         self.bullet_speed = 700.0
         self.reacts_to_bullets = False
         self.key_handler = key.KeyStateHandler()
@@ -20,10 +20,8 @@ class Player(physicalobject.PhysicalObject):
     def update(self, dt):
         super(Player, self).update(dt)
         if self.key_handler[key.LEFT]:
-            # self.rotation -= self.rotate_speed * dt
             self.x -= 2
         if self.key_handler[key.RIGHT]:
-            # self.rotation += self.rotate_speed * dt
             self.x += 2
 
         if self.key_handler[key.UP]:
@@ -43,10 +41,9 @@ class Player(physicalobject.PhysicalObject):
         if symbol == key.SPACE:
             self.image = config.player_fire
             self.fire()
-            # self.image = resources.player_image
-            pyglet.clock.schedule_once(self.unfire, 0.2)
+            pyglet.clock.schedule_once(self.change_image, 0.2)
 
-    def unfire(self, dt):
+    def change_image(self, dt):
         self.image = config.player_image
 
     def fire(self):

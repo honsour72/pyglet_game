@@ -10,9 +10,9 @@ game_over_label = pyglet.text.Label(text="GAME OVER", x=400, y=-300, anchor_x='c
 you_win_label = pyglet.text.Label(text="YOU WIN!", x=400, y=-300, anchor_x='center', batch=main_batch, font_size=48)
 
 player_ship = None
+num_lives = 3
 player_lives = []
 score = 0
-num_lives = 3
 game_objects = []
 event_stack_size = 0
 
@@ -32,8 +32,8 @@ def start_game(only_player=False):
     player_lives = config.player_lives(num_lives, main_batch)
 
     if not only_player:
-        asteroids = config.get_words(words_amount=5, batch=main_batch)
-        game_objects = [player_ship] + asteroids
+        words = config.get_words(words_amount=5, batch=main_batch)
+        game_objects = [player_ship] + words
     else:
         game_objects.append(player_ship)
 
@@ -105,14 +105,14 @@ def update_game(dt):
         else:
             game_over_label.y = 300
     elif victory:
-        pyglet.clock.unschedule(set_words)
+        pyglet.clock.unschedule(add_words)
         for obj in game_objects:
             obj.delete()
         game_objects.clear()
         you_win_label.y = 300
 
 
-def set_words(dt):
+def add_words(dt):
     global game_objects
     amount = randint(1, 10)
     words = config.get_words(amount, batch=main_batch)
@@ -122,5 +122,5 @@ def set_words(dt):
 if __name__ == '__main__':
     start_game()
     pyglet.clock.schedule_interval(update_game, 1 / 120.0)
-    pyglet.clock.schedule_interval(set_words, 10)
+    pyglet.clock.schedule_interval(add_words, 10)
     pyglet.app.run()
