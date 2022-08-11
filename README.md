@@ -1,7 +1,6 @@
 # Simple pyglet game
 ## <i>Matrix reversed-space invader</i>
 
----- 
 _This is my simple 2D-game based on pyglet module_
 
 _Idea: space invader fights against matrix_
