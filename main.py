@@ -72,6 +72,7 @@ def update_game(dt) -> None:
     7) Show win/lose label if it needed
     ... in 1/120 (0.008) sec
     :param dt: pyglet required parameter. For more info see:
+        https://pyglet.readthedocs.io/en/latest/programming_guide/examplegame.html
     :return: None
     """
     global score, num_lives
