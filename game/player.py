@@ -34,22 +34,22 @@ class Player(physicalobject.PhysicalObject):
         """
         super(Player, self).update(dt)
         if self.key_handler[key.LEFT]:
-            self.x -= 2
+            self.x -= config.player_speed
         if self.key_handler[key.RIGHT]:
-            self.x += 2
+            self.x += config.player_speed
 
         if self.key_handler[key.UP]:
             self.engine_sprite.rotation = self.rotation - 90  # flame should be turned down
             self.engine_sprite.x = self.x
             self.engine_sprite.y = self.y
             self.engine_sprite.visible = True
-            self.y += 2
+            self.y += config.player_speed
 
         if not self.key_handler[key.UP]:
             self.engine_sprite.visible = False
 
         if self.key_handler[key.DOWN]:
-            self.y -= 2
+            self.y -= config.player_speed
 
     def on_key_press(self, symbol, modifiers):
         """

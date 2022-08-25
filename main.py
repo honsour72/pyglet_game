@@ -4,9 +4,9 @@ import pyglet
 
 
 # parameters of game window
-game_window = pyglet.window.Window(800, 600)
+game_window = pyglet.window.Window(fullscreen=True)
 main_batch = pyglet.graphics.Batch()
-score_label = pyglet.text.Label(text="Score: 0", x=10, y=575, batch=main_batch)
+score_label = pyglet.text.Label(text="Score: 0", x=10, y=10, batch=main_batch)
 # both labels are fixed in the game window but out of border
 game_over_label = pyglet.text.Label(text="GAME OVER", x=400, y=-300, anchor_x='center', batch=main_batch, font_size=48)
 you_win_label = pyglet.text.Label(text="YOU WIN!", x=400, y=-300, anchor_x='center', batch=main_batch, font_size=48)
@@ -39,11 +39,11 @@ def start_game(only_player=False) -> None:
     for life in player_lives:
         life.delete()
 
-    player_ship = player.Player(x=400, y=300, batch=main_batch)
+    player_ship = player.Player(x=config.screen_width/2, y=50, batch=main_batch)
     player_lives = config.player_lives(num_lives, main_batch)
 
     if not only_player:
-        words = config.get_words(words_amount=5, batch=main_batch)
+        words = config.get_words(words_amount=15, batch=main_batch)
         game_objects = [player_ship] + words
     else:
         game_objects.append(player_ship)
@@ -156,7 +156,7 @@ def add_words(dt) -> None:
     :return: None
     """
     global game_objects
-    amount = randint(1, 10)
+    amount = randint(5, 15)
     words = config.get_words(amount, batch=main_batch)
     game_objects.extend(words)
 

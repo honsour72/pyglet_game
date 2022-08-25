@@ -2,6 +2,7 @@ import math
 import pyglet
 import random
 from . import letter
+from screeninfo import get_monitors
 
 
 # ==================================================================================================================== #
@@ -18,7 +19,7 @@ def player_lives(num_icons: int, batch=None) -> list:
     """
     pl = []
     for i in range(num_icons):
-        new_sprite = pyglet.sprite.Sprite(img=player_image, x=20 + i * 30, y=555, batch=batch)
+        new_sprite = pyglet.sprite.Sprite(img=player_image, x=20 + i * 30, y=40, batch=batch)
         new_sprite.scale = 0.5
         pl.append(new_sprite)
     return pl
@@ -59,10 +60,10 @@ def get_words(words_amount: int = None, batch=None) -> list:
     words = generate_random_words(amount=words_amount)
     for word in words:
         # configure word params
-        word_x = random.randint(1, 750)
-        word_y = random.randint(600, 700)
-        word_scale = random.choice([0.5, 0.6, 0.7, 0.8, 0.9, 1])
-        word_velocity = -random.randint(10, 50) * (1/word_scale)
+        word_x = random.randint(1, screen_width)
+        word_y = random.randint(screen_height, screen_height + 50 * len(word))
+        word_scale = random.choice([0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4])
+        word_velocity = -random.randint(20, 70) * (1/word_scale)
         letter_distance = word_scale * 60  # interval between letters
         for let in word[::-1]:  # word will fall in reverse order
             new_letter = letter.Letter(letter=let, x=word_x, y=word_y, batch=batch, produce_child=False)
@@ -108,6 +109,11 @@ def get_image(letter: str) -> pyglet.resource.image:
 #                                                   ALL CONSTANTS                                                      #
 # ==================================================================================================================== #
 
+# SCREEN RESOLUTION
+monitor_data = get_monitors()[0]
+screen_width = monitor_data.width
+screen_height = monitor_data.height
+
 pyglet.resource.path = ['./resources']
 pyglet.resource.reindex()
 
@@ -127,4 +133,6 @@ engine_image.anchor_x = engine_image.width * 1.5
 engine_image.anchor_y = engine_image.height / 2
 
 bullet_sound = pyglet.resource.media("bullet.wav", streaming=False)
+
+player_speed = 6
 
