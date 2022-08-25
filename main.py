@@ -2,14 +2,23 @@ from game import letter, config, player
 from random import randint
 import pyglet
 
-
 # parameters of game window
-game_window = pyglet.window.Window(fullscreen=True)
+game_window = pyglet.window.Window(width=config.screen_width, height=config.screen_height - 30)
 main_batch = pyglet.graphics.Batch()
 score_label = pyglet.text.Label(text="Score: 0", x=10, y=10, batch=main_batch)
 # both labels are fixed in the game window but out of border
-game_over_label = pyglet.text.Label(text="GAME OVER", x=400, y=-300, anchor_x='center', batch=main_batch, font_size=48)
-you_win_label = pyglet.text.Label(text="YOU WIN!", x=400, y=-300, anchor_x='center', batch=main_batch, font_size=48)
+game_over_label = pyglet.text.Label(text="GAME OVER",
+                                    x=config.screen_width / 2,
+                                    y=-config.screen_height / 2,
+                                    anchor_x='center',
+                                    batch=main_batch,
+                                    font_size=48)
+you_win_label = pyglet.text.Label(text="YOU WIN!",
+                                  x=config.screen_width / 2,
+                                  y=-config.screen_height / 2,
+                                  anchor_x='center',
+                                  batch=main_batch,
+                                  font_size=48)
 
 # parameters of game
 player_ship = None
@@ -39,7 +48,7 @@ def start_game(only_player=False) -> None:
     for life in player_lives:
         life.delete()
 
-    player_ship = player.Player(x=config.screen_width/2, y=50, batch=main_batch)
+    player_ship = player.Player(x=config.screen_width / 2, y=50, batch=main_batch)
     player_lives = config.player_lives(num_lives, main_batch)
 
     if not only_player:
@@ -138,7 +147,7 @@ def update_game(dt) -> None:
             start_game(True)
         else:
             # show game_over label in the center of game window
-            game_over_label.y = 300
+            game_over_label.y = config.screen_height / 2
     elif victory:
         # unset letter-generate function
         pyglet.clock.unschedule(add_words)
@@ -146,7 +155,7 @@ def update_game(dt) -> None:
             obj.delete()
         game_objects.clear()  # clear game_objects list
         # show you_win label in the center of game window
-        you_win_label.y = 300
+        you_win_label.y = config.screen_height / 2
 
 
 def add_words(dt) -> None:

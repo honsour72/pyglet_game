@@ -134,5 +134,5 @@ engine_image.anchor_y = engine_image.height / 2
 
 bullet_sound = pyglet.resource.media("bullet.wav", streaming=False)
 
-player_speed = 6
+player_speed = 4
 
